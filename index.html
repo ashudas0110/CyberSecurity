@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cybersecurity Visual Learning Guide</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        h2 {
+            color: #34495e;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+        
+        .section {
+            margin: 30px 0;
+            padding: 20px;
+            border-left: 5px solid #3498db;
+            background: #f8f9fa;
+            border-radius: 0 10px 10px 0;
+        }
+        
+        .diagram {
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .attack-flow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .attack-step {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            min-width: 120px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+        
+        .attack-step:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+        
+        .arrow {
+            font-size: 24px;
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .cia-triangle {
+            width: 300px;
+            height: 300px;
+            margin: 20px auto;
+            position: relative;
+            background: conic-gradient(from 0deg, #3498db, #e74c3c, #2ecc71, #3498db);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .cia-inner {
+            width: 250px;
+            height: 250px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .network-layer {
+            background: linear-gradient(to right, #74b9ff, #0984e3);
+            color: white;
+            padding: 15px;
+            margin: 5px 0;
+            border-radius: 8px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .network-layer:hover {
+            transform: translateX(10px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .vulnerability-matrix {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .risk-cell {
+            padding: 15px;
+            text-align: center;
+            border-radius: 8px;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .risk-low { background: #2ecc71; }
+        .risk-medium { background: #f39c12; }
+        .risk-high { background: #e74c3c; }
+        .risk-critical { background: #8e44ad; }
+        
+        .interactive-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s;
+            font-size: 16px;
+        }
+        
+        .interactive-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+        }
+        
+        .quiz-container {
+            background: #ecf0f1;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .answer-option {
+            background: white;
+            border: 2px solid #bdc3c7;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .answer-option:hover {
+            border-color: #3498db;
+            background: #ebf3fd;
+        }
+        
+        .answer-option.correct {
+            border-color: #27ae60;
+            background: #d5f5d5;
+        }
+        
+        .answer-option.incorrect {
+            border-color: #e74c3c;
+            background: #f5d5d5;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .flowchart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .flow-step {
+            background: linear-gradient(135deg, #00b894, #00a085);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            min-width: 200px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .flow-arrow {
+            font-size: 30px;
+            color: #2d3436;
+        }
+        
+        @media (max-width: 768px) {
+            .attack-flow {
+                flex-direction: column;
+            }
+            .vulnerability-matrix {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔐 Cybersecurity Visual Learning Guide</h1>
+        <p style="text-align: center; font-size: 18px; color: #7f8c8d;">Interactive diagrams and visual aids for PFRDA Grade A IT Officer exam preparation</p>
+
+        <div class="section">
+            <h2>🎯 Cyber Attack Kill Chain</h2>
+            <div class="diagram">
+                <div class="attack-flow">
+                    <div class="attack-step">
+                        <strong>1. Reconnaissance</strong><br>
+                        Information gathering
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="attack-step">
+                        <strong>2. Weaponization</strong><br>
+                        Create malicious payload
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="attack-step">
+                        <strong>3. Delivery</strong><br>
+                        Transmit weapon to target
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="attack-step">
+                        <strong>4. Exploitation</strong><br>
+                        Execute code on target
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="attack-step">
+                        <strong>5. Installation</strong><br>
+                        Install malware on target
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="attack-step">
+                        <strong>6. Command & Control</strong><br>
+                        Establish remote access
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="attack-step">
+                        <strong>7. Actions on Objectives</strong><br>
+                        Achieve attack goals
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🛡️ CIA Triad Visualization</h2>
+            <div class="diagram">
+                <div class="cia-triangle">
+                    <div class="cia-inner">
+                        <div style="text-align: center;">
+                            <strong>INFORMATION<br>SECURITY</strong><br><br>
+                            <span style="color: #3498db;">🔒 Confidentiality</span><br>
+                            <span style="color: #e74c3c;">🛡️ Integrity</span><br>
+                            <span style="color: #2ecc71;">⚡ Availability</span>
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-top: 20px;">
+                    <button class="interactive-btn" onclick="showCIADetails('confidentiality')">Confidentiality</button>
+                    <button class="interactive-btn" onclick="showCIADetails('integrity')">Integrity</button>
+                    <button class="interactive-btn" onclick="showCIADetails('availability')">Availability</button>
+                </div>
+                <div id="cia-details" style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px; display: none;"></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🌐 Network Security Layers</h2>
+            <div class="diagram">
+                <div class="flowchart">
+                    <div class="flow-step">🌍 Internet / External Networks</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step">🔥 Perimeter Firewall (External)</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step">🏰 DMZ (Web Servers, Email Servers)</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step">🔥 Internal Firewall</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step">🏢 Internal Network (Workstations)</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step">🗄️ Data Center (Servers, Databases)</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step">💾 Data Storage (Encrypted)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📊 Risk Assessment Matrix</h2>
+            <div class="diagram">
+                <h3>Probability vs Impact</h3>
+                <div class="vulnerability-matrix">
+                    <div style="text-align: center; font-weight: bold;">Impact →<br>Probability ↓</div>
+                    <div style="text-align: center; font-weight: bold;">Low</div>
+                    <div style="text-align: center; font-weight: bold;">Medium</div>
+                    <div style="text-align: center; font-weight: bold;">High</div>
+                    <div style="text-align: center; font-weight: bold;">Critical</div>
+                    
+                    <div style="text-align: center; font-weight: bold;">Low</div>
+                    <div class="risk-cell risk-low">1<br>Low Risk</div>
+                    <div class="risk-cell risk-low">2<br>Low Risk</div>
+                    <div class="risk-cell risk-medium">3<br>Medium Risk</div>
+                    <div class="risk-cell risk-medium">4<br>Medium Risk</div>
+                    
+                    <div style="text-align: center; font-weight: bold;">Medium</div>
+                    <div class="risk-cell risk-low">2<br>Low Risk</div>
+                    <div class="risk-cell risk-medium">3<br>Medium Risk</div>
+                    <div class="risk-cell risk-medium">4<br>Medium Risk</div>
+                    <div class="risk-cell risk-high">5<br>High Risk</div>
+                    
+                    <div style="text-align: center; font-weight: bold;">High</div>
+                    <div class="risk-cell risk-medium">3<br>Medium Risk</div>
+                    <div class="risk-cell risk-medium">4<br>Medium Risk</div>
+                    <div class="risk-cell risk-high">5<br>High Risk</div>
+                    <div class="risk-cell risk-high">6<br>High Risk</div>
+                    
+                    <div style="text-align: center; font-weight: bold;">Critical</div>
+                    <div class="risk-cell risk-medium">4<br>Medium Risk</div>
+                    <div class="risk-cell risk-high">5<br>High Risk</div>
+                    <div class="risk-cell risk-high">6<br>High Risk</div>
+                    <div class="risk-cell risk-critical">7<br>Critical Risk</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🔐 Authentication Methods Comparison</h2>
+            <div class="diagram">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                    <div style="background: #e8f5e8; padding: 20px; border-radius: 10px; border: 2px solid #27ae60;">
+                        <h3 style="color: #27ae60; margin-top: 0;">🧠 Something You Know</h3>
+                        <ul>
+                            <li>Passwords</li>
+                            <li>PINs</li>
+                            <li>Security Questions</li>
+                            <li>Passphrases</li>
+                        </ul>
+                        <div style="background: #27ae60; color: white; padding: 8px; border-radius: 5px; margin-top: 10px;">
+                            <strong>Strength: Medium</strong><br>
+                            Risk: Password attacks
+                        </div>
+                    </div>
+                    
+                    <div style="background: #e8f4fd; padding: 20px; border-radius: 10px; border: 2px solid #3498db;">
+                        <h3 style="color: #3498db; margin-top: 0;">📱 Something You Have</h3>
+                        <ul>
+                            <li>Smart Cards</li>
+                            <li>Hardware Tokens</li>
+                            <li>Mobile Devices</li>
+                            <li>Certificates</li>
+                        </ul>
+                        <div style="background: #3498db; color: white; padding: 8px; border-radius: 5px; margin-top: 10px;">
+                            <strong>Strength: High</strong><br>
+                            Risk: Device theft/loss
+                        </div>
+                    </div>
+                    
+                    <div style="background: #fdf2e8; padding: 20px; border-radius: 10px; border: 2px solid #e67e22;">
+                        <h3 style="color: #e67e22; margin-top: 0;">👁️ Something You Are</h3>
+                        <ul>
+                            <li>Fingerprints</li>
+                            <li>Iris Scans</li>
+                            <li>Voice Recognition</li>
+                            <li>Facial Recognition</li>
+                        </ul>
+                        <div style="background: #e67e22; color: white; padding: 8px; border-radius: 5px; margin-top: 10px;">
+                            <strong>Strength: Very High</strong><br>
+                            Risk: Spoofing attempts
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🔍 Network Audit Process Flow</h2>
+            <div class="diagram">
+                <div class="flowchart">
+                    <div class="flow-step">📋 Planning & Preparation<br><small>Scope, Resources, Timeline</small></div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step">📊 Information Gathering<br><small>Network Discovery, Documentation</small></div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step">🔍 Vulnerability Assessment<br><small>Scanning, Manual Testing</small></div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step">⚔️ Penetration Testing<br><small>External & Internal Testing</small></div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step">📈 Analysis & Reporting<br><small>Risk Classification, Recommendations</small></div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step">🔄 Follow-up & Monitoring<br><small>Remediation Tracking</small></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🧪 Interactive Quick Quiz</h2>
+            <div class="quiz-container">
+                <div id="quiz-question">
+                    <h3>Question 1: What does IDS stand for?</h3>
+                    <div class="answer-option" onclick="selectAnswer(this, false)">A) Internet Detection System</div>
+                    <div class="answer-option" onclick="selectAnswer(this, false)">B) Internal Defense System</div>
+                    <div class="answer-option" onclick="selectAnswer(this, true)">C) Intrusion Detection System</div>
+                    <div class="answer-option" onclick="selectAnswer(this, false)">D) Information Display System</div>
+                </div>
+                <div id="quiz-feedback" class="hidden" style="margin-top: 15px; padding: 15px; border-radius: 8px;"></div>
+                <button class="interactive-btn" onclick="nextQuestion()" id="next-btn" style="display: none;">Next Question</button>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🔢 Important Formulas & Calculations</h2>
+            <div class="diagram">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                    <div style="background: #fff5f5; padding: 20px; border-radius: 10px; border-left: 5px solid #e74c3c;">
+                        <h3 style="color: #e74c3c;">Risk Assessment</h3>
+                        <code style="background: #f8f9fa; padding: 10px; display: block; border-radius: 5px;">
+                            Risk = Threat × Vulnerability × Impact<br>
+                            ALE = SLE × ARO<br>
+                            Risk Score = Probability × Impact
+                        </code>
+                    </div>
+                    
+                    <div style="background: #f0f8ff; padding: 20px; border-radius: 10px; border-left: 5px solid #3498db;">
+                        <h3 style="color: #3498db;">Network Performance</h3>
+                        <code style="background: #f8f9fa; padding: 10px; display: block; border-radius: 5px;">
+                            Throughput = (Packet Size × PPS) / 1M<br>
+                            Utilization = (Current / Max) × 100%<br>
+                            Latency = Round Trip Time / 2
+                        </code>
+                    </div>
+                    
+                    <div style="background: #f0fff0; padding: 20px; border-radius: 10px; border-left: 5px solid #27ae60;">
+                        <h3 style="color: #27ae60;">Cryptographic Strength</h3>
+                        <code style="background: #f8f9fa; padding: 10px; display: block; border-radius: 5px;">
+                            AES-128: 2^128 keys<br>
+                            AES-256: 2^256 keys<br>
+                            RSA minimum: 2048 bits
+                        </code>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📋 OSI Model Security Controls</h2>
+            <div class="diagram">
+                <div class="network-layer" style="background: linear-gradient(to right, #6c5ce7, #a29bfe);">
+                    <strong>Layer 7 - Application</strong><br>
+                    🛡️ WAF, Input Validation, Authentication, Authorization
+                </div>
+                <div class="network-layer" style="background: linear-gradient(to right, #fd79a8, #e84393);">
+                    <strong>Layer 6 - Presentation</strong><br>
+                    🔐 Encryption, Data Compression, Format Conversion
+                </div>
+                <div class="network-layer" style="background: linear-gradient(to right, #fdcb6e, #e17055);">
+                    <strong>Layer 5 - Session</strong><br>
+                    🔗 Session Management, SSL/TLS, API Security
+                </div>
+                <div class="network-layer" style="background: linear-gradient(to right, #55efc4, #00b894);">
+                    <strong>Layer 4 - Transport</strong><br>
+                    🚪 Port Security, TCP/UDP Filtering, Load Balancing
+                </div>
+                <div class="network-layer" style="background: linear-gradient(to right, #74b9ff, #0984e3);">
+                    <strong>Layer 3 - Network</strong><br>
+                    🔥 Firewalls, IPSec, Routing Security, IDS/IPS
+                </div>
+                <div class="network-layer" style="background: linear-gradient(to right, #a29bfe, #6c5ce7);">
+                    <strong>Layer 2 - Data Link</strong><br>
+                    🏷️ MAC Filtering, VLAN Security, Switch Security
+                </div>
+                <div class="network-layer" style="background: linear-gradient(to right, #fd79a8, #e84393);">
+                    <strong>Layer 1 - Physical</strong><br>
+                    🔒 Physical Access Controls, Cable Security, Surveillance
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🎯 Exam Focus Areas</h2>
+            <div class="diagram">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                    <div style="background: #e74c3c; color: white; padding: 20px; border-radius: 10px; text-align: center;">
+                        <h3>🔥 High Priority</h3>
+                        <ul style="text-align: left;">
+                            <li>Network Security</li>
+                            <li>Authentication</li>
+                            <li>Cyber Attacks</li>
+                        </ul>
+                        <strong>40-50% weightage</strong>
+                    </div>
+                    
+                    <div style="background: #f39c12; color: white; padding: 20px; border-radius: 10px; text-align: center;">
+                        <h3>⚡ Medium Priority</h3>
+                        <ul style="text-align: left;">
+                            <li>Systems Audit</li>
+                            <li>Network Audit</li>
+                            <li>CIA Triad</li>
+                        </ul>
+                        <strong>30-35% weightage</strong>
+                    </div>
+                    
+                    <div style="background: #27ae60; color: white; padding: 20px; border-radius: 10px; text-align: center;">
+                        <h3>📚 Important</h3>
+                        <ul style="text-align: left;">
+                            <li>Software Security</li>
+                            <li>Compliance</li>
+                            <li>Frameworks</li>
+                        </ul>
+                        <strong>15-20% weightage</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>⚡ Quick Memory Aids</h2>
+            <div class="diagram">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                    <div style="background: #ecf0f1; padding: 15px; border-radius: 8px;">
+                        <h4>🔤 STRIDE Threat Model</h4>
+                        <ul>
+                            <li><strong>S</strong>poofing identity</li>
+                            <li><strong>T</strong>ampering with data</li>
+                            <li><strong>R</strong>epudiation</li>
+                            <li><strong>I</strong>nformation disclosure</li>
+                            <li><strong>D</strong>enial of service</li>
+                            <li><strong>E</strong>levation of privilege</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: #ecf0f1; padding: 15px; border-radius: 8px;">
+                        <h4>🛡️ Defense in Depth</h4>
+                        <ul>
+                            <li><strong>Prevent</strong>: Firewalls, Access controls</li>
+                            <li><strong>Detect</strong>: IDS, Monitoring</li>
+                            <li><strong>Respond</strong>: Incident response</li>
+                            <li><strong>Recover</strong>: Backups, BCP</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: #ecf0f1; padding: 15px; border-radius: 8px;">
+                        <h4>🔍 NIST Framework</h4>
+                        <ul>
+                            <li><strong>I</strong>dentify assets & risks</li>
+                            <li><strong>P</strong>rotect critical assets</li>
+                            <li><strong>D</strong>etect security events</li>
+                            <li><strong>R</strong>espond to incidents</li>
+                            <li><strong>R</strong>ecover operations</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📊 Practice Statistics Tracker</h2>
+            <div class="diagram">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                    <div style="background: #3498db; color: white; padding: 20px; border-radius: 10px; text-align: center;">
+                        <h3>Questions Attempted</h3>
+                        <div style="font-size: 2em; font-weight: bold;" id="attempted-count">0</div>
+                        <button class="interactive-btn" onclick="incrementCounter('attempted-count')" style="background: white; color: #3498db;">+1</button>
+                    </div>
+                    
+                    <div style="background: #27ae60; color: white; padding: 20px; border-radius: 10px; text-align: center;">
+                        <h3>Correct Answers</h3>
+                        <div style="font-size: 2em; font-weight: bold;" id="correct-count">0</div>
+                        <button class="interactive-btn" onclick="incrementCounter('correct-count')" style="background: white; color: #27ae60;">+1</button>
+                    </div>
+                    
+                    <div style="background: #e74c3c; color: white; padding: 20px; border-radius: 10px; text-align: center;">
+                        <h3>Accuracy %</h3>
+                        <div style="font-size: 2em; font-weight: bold;" id="accuracy">0%</div>
+                        <button class="interactive-btn" onclick="calculateAccuracy()" style="background: white; color: #e74c3c;">Calculate</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📚 Last-Minute Revision Cards</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                <div class="quiz-container" style="cursor: pointer;" onclick="flipCard(this)">
+                    <div class="card-front">
+                        <h4>🔐 OWASP Top 3</h4>
+                        <p>Click to reveal answer</p>
+                    </div>
+                    <div class="card-back hidden">
+                        <h4>🔐 OWASP Top 3</h4>
+                        <ol>
+                            <li><strong>Broken Access Control</strong>: Authorization failures</li>
+                            <li><strong>Cryptographic Failures</strong>: Weak encryption</li>
+                            <li><strong>Injection</strong>: SQL, XSS, Command injection</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="quiz-container" style="cursor: pointer;" onclick="flipCard(this)">
+                    <div class="card-front">
+                        <h4>📡 VPN Protocols</h4>
+                        <p>Click to reveal answer</p>
+                    </div>
+                    <div class="card-back hidden">
+                        <h4>📡 VPN Protocols</h4>
+                        <ul>
+                            <li><strong>IPSec</strong>: Network layer, strongest</li>
+                            <li><strong>SSL/TLS</strong>: Application layer, web-based</li>
+                            <li><strong>L2TP</strong>: Layer 2, often with IPSec</li>
+                            <li><strong>PPTP</strong>: Deprecated, weak security</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="quiz-container" style="cursor: pointer;" onclick="flipCard(this)">
+                    <div class="card-front">
+                        <h4>🔍 IDS vs IPS</h4>
+                        <p>Click to reveal answer</p>
+                    </div>
+                    <div class="card-back hidden">
+                        <h4>🔍 IDS vs IPS</h4>
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr style="background: #f8f9fa;">
+                                <th style="border: 1px solid #ddd; padding: 8px;">Feature</th>
+                                <th style="border: 1px solid #ddd; padding: 8px;">IDS</th>
+                                <th style="border: 1px solid #ddd; padding: 8px;">IPS</th>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #ddd; padding: 8px;"><strong>Action</strong></td>
+                                <td style="border: 1px solid #ddd; padding: 8px;">Detect & Alert</td>
+                                <td style="border: 1px solid #ddd; padding: 8px;">Detect & Block</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #ddd; padding: 8px;"><strong>Deployment</strong></td>
+                                <td style="border: 1px solid #ddd; padding: 8px;">Out-of-band</td>
+                                <td style="border: 1px solid #ddd; padding: 8px;">Inline</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #ddd; padding: 8px;"><strong>Impact</strong></td>
+                                <td style="border: 1px solid #ddd; padding: 8px;">No performance impact</td>
+                                <td style="border: 1px solid #ddd; padding: 8px;">Potential latency</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🎯 Final Exam Tips</h2>
+            <div style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 25px; border-radius: 15px; margin: 20px 0;">
+                <h3 style="margin-top: 0; color: white;">✅ Do's</h3>
+                <ul>
+                    <li>Read questions carefully - watch for keywords like "NOT", "EXCEPT"</li>
+                    <li>Eliminate obviously wrong options first</li>
+                    <li>Manage time: 60-90 seconds per question</li>
+                    <li>Flag difficult questions and return later</li>
+                    <li>Trust your first instinct if you're confident</li>
+                </ul>
+                
+                <h3 style="color: white;">❌ Don'ts</h3>
+                <ul>
+                    <li>Don't change answers unless you're certain</li>
+                    <li>Don't spend too long on any single question</li>
+                    <li>Don't guess randomly (negative marking)</li>
+                    <li>Don't panic if you encounter unfamiliar terms</li>
+                    <li>Don't leave easy questions for later</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🚀 Success Metrics</h2>
+            <div class="diagram">
+                <div style="text-align: center; font-size: 18px;">
+                    <p><strong>Target Score for Phase 1:</strong> 70-75% (Safe qualification)</p>
+                    <p><strong>Minimum Score:</strong> 60% (Cut-off varies yearly)</p>
+                    <p><strong>Time Allocation:</strong> 120 minutes for 150 questions</p>
+                    <p><strong>Negative Marking:</strong> -0.25 for wrong answers</p>
+                </div>
+                
+                <div style="background: #2ecc71; color: white; padding: 20px; border-radius: 10px; margin: 20px 0; text-align: center;">
+                    <h3 style="margin: 0; color: white;">🎯 Your Goal: Confident Qualification to Phase 2!</h3>
+                    <p style="margin: 10px 0; font-size: 16px;">Focus on understanding concepts deeply rather than memorizing facts</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentQuestionIndex = 0;
+        const questions = [
+            {
+                question: "What does IDS stand for?",
+                options: [
+                    "Internet Detection System",
+                    "Internal Defense System", 
+                    "Intrusion Detection System",
+                    "Information Display System"
+                ],
+                correct: 2,
+                explanation: "IDS stands for Intrusion Detection System - a security tool that monitors network traffic and system activities for malicious activities or policy violations."
+            },
+            {
+                question: "Which authentication factor is a fingerprint scan?",
+                options: [
+                    "Something you know",
+                    "Something you have",
+                    "Something you are",
+                    "Somewhere you are"
+                ],
+                correct: 2,
+                explanation: "Biometric authentication like fingerprints fall under 'Something you are' - inherence factors that are part of your physical being."
+            },
+            {
+                question: "What is the primary purpose of a DMZ in network security?",
+                options: [
+                    "Improve network performance",
+                    "Store backup data",
+                    "Provide isolated area for public-facing services",
+                    "Host internal applications"
+                ],
+                correct: 2,
+                explanation: "DMZ (Demilitarized Zone) creates an isolated network segment between internal network and internet, hosting public services like web servers safely."
+            },
+            {
+                question: "Which hash algorithm is considered cryptographically broken?",
+                options: [
+                    "SHA-256",
+                    "SHA-512",
+                    "MD5",
+                    "bcrypt"
+                ],
+                correct: 2,
+                explanation: "MD5 is cryptographically broken due to collision vulnerabilities. SHA-256 or higher should be used for security-critical applications."
+            },
+            {
+                question: "In the CIA triad, what does availability primarily address?",
+                options: [
+                    "Data confidentiality",
+                    "System accessibility when needed",
+                    "Data accuracy",
+                    "User authentication"
+                ],
+                correct: 1,
+                explanation: "Availability ensures that systems and data are accessible to authorized users when needed, often implemented through redundancy and fault tolerance."
+            }
+        ];
+
+        function selectAnswer(element, isCorrect) {
+            // Remove previous selections
+            const options = element.parentNode.querySelectorAll('.answer-option');
+            options.forEach(opt => {
+                opt.classList.remove('correct', 'incorrect');
+            });
+
+            // Mark selected answer
+            if (isCorrect) {
+                element.classList.add('correct');
+                showFeedback(true, questions[currentQuestionIndex].explanation);
+            } else {
+                element.classList.add('incorrect');
+                // Also highlight correct answer
+                options[questions[currentQuestionIndex].correct].classList.add('correct');
+                showFeedback(false, questions[currentQuestionIndex].explanation);
+            }
+
+            document.getElementById('next-btn').style.display = 'inline-block';
+        }
+
+        function showFeedback(isCorrect, explanation) {
+            const feedback = document.getElementById('quiz-feedback');
+            feedback.className = '';
+            feedback.style.display = 'block';
+            
+            if (isCorrect) {
+                feedback.style.background = '#d5f5d5';
+                feedback.style.border = '2px solid #27ae60';
+                feedback.innerHTML = `<strong>✅ Correct!</strong><br>${explanation}`;
+            } else {
+                feedback.style.background = '#f5d5d5';
+                feedback.style.border = '2px solid #e74c3c';
+                feedback.innerHTML = `<strong>❌ Incorrect!</strong><br>${explanation}`;
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex >= questions.length) {
+                currentQuestionIndex = 0; // Loop back to first question
+            }
+
+            const questionContainer = document.getElementById('quiz-question');
+            const q = questions[currentQuestionIndex];
+            
+            questionContainer.innerHTML = `
+                <h3>Question ${currentQuestionIndex + 1}: ${q.question}</h3>
+                ${q.options.map((option, index) => 
+                    `<div class="answer-option" onclick="selectAnswer(this, ${index === q.correct})">${String.fromCharCode(65 + index)}) ${option}</div>`
+                ).join('')}
+            `;
+
+            document.getElementById('quiz-feedback').style.display = 'none';
+            document.getElementById('next-btn').style.display = 'none';
+        }
+
+        function showCIADetails(type) {
+            const details = document.getElementById('cia-details');
+            details.style.display = 'block';
+            
+            const content = {
+                confidentiality: `
+                    <h4>🔒 Confidentiality</h4>
+                    <p><strong>Definition:</strong> Ensuring information is accessible only to authorized individuals.</p>
+                    <p><strong>Implementation:</strong></p>
+                    <ul>
+                        <li>Encryption (AES, RSA)</li>
+                        <li>Access controls (RBAC, MAC)</li>
+                        <li>Data classification</li>
+                        <li>Privacy policies</li>
+                    </ul>
+                    <p><strong>Threats:</strong> Data breaches, unauthorized access, social engineering</p>
+                `,
+                integrity: `
+                    <h4>🛡️ Integrity</h4>
+                    <p><strong>Definition:</strong> Ensuring data accuracy and completeness, preventing unauthorized modification.</p>
+                    <p><strong>Implementation:</strong></p>
+                    <ul>
+                        <li>Digital signatures</li>
+                        <li>Hash functions (SHA-256)</li>
+                        <li>Version control</li>
+                        <li>Checksums</li>
+                    </ul>
+                    <p><strong>Threats:</strong> Data tampering, unauthorized modifications, malware</p>
+                `,
+                availability: `
+                    <h4>⚡ Availability</h4>
+                    <p><strong>Definition:</strong> Ensuring systems and data are accessible when needed by authorized users.</p>
+                    <p><strong>Implementation:</strong></p>
+                    <ul>
+                        <li>Redundancy and failover</li>
+                        <li>Load balancing</li>
+                        <li>Backup and recovery</li>
+                        <li>Disaster recovery planning</li>
+                    </ul>
+                    <p><strong>Threats:</strong> DoS/DDoS attacks, hardware failures, natural disasters</p>
+                `
+            };
+            
+            details.innerHTML = content[type];
+        }
+
+        function flipCard(card) {
+            const front = card.querySelector('.card-front');
+            const back = card.querySelector('.card-back');
+            
+            if (front.style.display === 'none') {
+                front.style.display = 'block';
+                back.style.display = 'none';
+            } else {
+                front.style.display = 'none';
+                back.style.display = 'block';
+            }
+        }
+
+        function incrementCounter(counterId) {
+            const counter = document.getElementById(counterId);
+            const currentValue = parseInt(counter.textContent);
+            counter.textContent = currentValue + 1;
+        }
+
+        function calculateAccuracy() {
+            const attempted = parseInt(document.getElementById('attempted-count').textContent);
+            const correct = parseInt(document.getElementById('correct-count').textContent);
+            
+            if (attempted === 0) {
+                document.getElementById('accuracy').textContent = '0%';
+                return;
+            }
+            
+            const accuracy = Math.round((correct / attempted) * 100);
+            document.getElementById('accuracy').textContent = accuracy + '%';
+            
+            // Show motivational message
+            if (accuracy >= 80) {
+                alert('🎉 Excellent! You\'re ready for the exam!');
+            } else if (accuracy >= 70) {
+                alert('👍 Good progress! Review weak areas and practice more.');
+            } else {
+                alert('📚 Keep studying! Focus on understanding concepts.');
+            }
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add some interactive elements
+            const networkLayers = document.querySelectorAll('.network-layer');
+            networkLayers.forEach((layer, index) => {
+                layer.addEventListener('click', function() {
+                    alert(`Layer ${7-index}: ${this.textContent.split(' - ')[1]}`);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+                        <h4>🔥 Firewall Types</h4>
+                        <p>Click to reveal answer</p>
+                    </div>
+                    <div class="card-back hidden">
+                        <h4>🔥 Firewall Types</h4>
+                        <ol>
+                            <li><strong>Packet Filtering</strong>: Layer 3-4, Stateless</li>
+                            <li><strong>Stateful</strong>: Connection tracking</li>
+                            <li><strong>Application</strong>: Layer 7, Deep inspection</li>
+                            <li><strong>Next-Gen</strong>: Application awareness + IPS</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="quiz-container" style="cursor: pointer;" onclick="flipCard(this)">
+                    <div class="card-front">
+                        
